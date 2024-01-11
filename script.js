@@ -86,6 +86,7 @@ const sendMail = function () {
     dialog.classList.remove("hidden");
     btnCloseModal.textContent = "Reload Page";
     displayMessage.textContent = "Error couldn't send email!";
+    return;
   }
 
   emailjs
