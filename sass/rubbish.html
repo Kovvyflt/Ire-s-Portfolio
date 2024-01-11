@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Pagination</title>
+  <style>
+    #pagination-container {
+      margin-top: 20px;
+    }
+    .page-item {
+      display: inline-block;
+      margin-right: 5px;
+      cursor: pointer;
+      padding: 5px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+<div id="data-container"></div>
+<div id="pagination-container"></div>
+
+<script>
+  // Sample array of objects
+  const dataArray = [
+    { id: 1, name: 'Item 1' },
+    { id: 2, name: 'Item 2' },
+    { id: 3, name: 'Item 3' },
+    // ... more items
+    { id: 10, name: 'Item 10' },
+    { id: 11, name: 'Item 11' },
+
+    { id: 1, name: 'Item 1' },
+    { id: 2, name: 'Item 2' },
+    { id: 3, name: 'Item 3' },
+    // ... more items
+    { id: 10, name: 'Item 10' },
+    { id: 11, name: 'Item 11' },
+
+    { id: 1, name: 'Item 3' },
+    { id: 2, name: 'Item 4' },
+    { id: 3, name: 'Item 5' },
+    // ... more items
+    { id: 10, name: 'Item 10' },
+    { id: 11, name: 'Item 11' },
+
+    { id: 1, name: 'Item 1' },
+    { id: 2, name: 'Item 2' },
+    { id: 3, name: 'Item 3' },
+    // ... more items
+    { id: 10, name: 'Item 10' },
+    { id: 11, name: 'Item 11' },
+    // ... more items
+  ];
+
+  const itemsPerPage = 5; // Adjust as needed
+  let currentPage = 1;
+
+  function renderData(page) {
+    const startIndex = (page - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const pageData = dataArray.slice(startIndex, endIndex);
+
+    const dataContainer = document.getElementById('data-container');
+    dataContainer.innerHTML = '';
+
+    pageData.forEach(item => {
+      const itemElement = document.createElement('div');
+      itemElement.textContent = `${item.id}: ${item.name}`;
+      dataContainer.appendChild(itemElement);
+    });
+  }
+
+  function renderPagination() {
+    const totalPages = Math.ceil(dataArray.length / itemsPerPage);
+    const paginationContainer = document.getElementById('pagination-container');
+    paginationContainer.innerHTML = '';
+
+    for (let i = 1; i <= totalPages; i++) {
+      const pageItem = document.createElement('div');
+      pageItem.classList.add('page-item');
+      pageItem.textContent = i;
+      pageItem.addEventListener('click', () => {
+        currentPage = i;
+        renderData(currentPage);
+        renderPagination();
+      });
+      paginationContainer.appendChild(pageItem);
+    }
+  }
+
+  // Initial render
+  renderData(currentPage);
+  renderPagination();
+</script>
+
+</body>
+</html>
